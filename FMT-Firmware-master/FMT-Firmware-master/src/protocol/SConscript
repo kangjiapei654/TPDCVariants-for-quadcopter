@@ -1,0 +1,16 @@
+from building import *
+import BuildLists as bl
+
+cwd = GetCurrentDir()
+
+src = []
+for f in bl.PROTOCOL:
+    src += Glob(f)
+
+inc = []
+for d in bl.PROTOCOL_CPPPATH:
+    inc += [cwd + '/' + d]
+
+group = DefineGroup('PROTOCOL', src, depend = [''], CPPPATH = inc)
+
+Return('group')

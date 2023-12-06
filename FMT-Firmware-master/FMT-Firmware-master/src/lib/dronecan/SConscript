@@ -1,0 +1,22 @@
+Import('RTT_ROOT')
+Import('rtconfig')
+from building import *
+
+import build_dronecan
+import os
+
+DSDLC_inc = os.path.normpath(build_dronecan.DSDLC_GEN_ROOT + '/include/')
+DSDLC_src = os.path.normpath(build_dronecan.DSDLC_GEN_ROOT + '/src/')
+print('dronecan_dsdlc_include: ' + DSDLC_inc)
+print('dronecan_dsdlc_src: ' + DSDLC_src)
+
+cwd = GetCurrentDir()
+
+src = Glob('libcanard/*.c')
+src += Glob(DSDLC_src + "/*.c")
+
+CPPPATH = [cwd + '/libcanard', DSDLC_inc]
+
+group = DefineGroup('dronecan', src, depend = [''], CPPPATH = CPPPATH)
+
+Return('group')
